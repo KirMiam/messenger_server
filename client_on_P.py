@@ -37,7 +37,7 @@ async def connect_to_server():
     if input() == "1":
         token = "3025c21685462614d97d8ea01d4f20447ffad083"
     else:
-        token = '739ab8196b5b6cf4b2012f3f75f7d98d42ca9bc5'
+        token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
     async with websockets.connect("ws://176.124.204.174:8000/ws/chat/chat1/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         #async with websockets.connect("ws://localhost:8000/ws/chat/chat1/",
@@ -71,8 +71,11 @@ def http_post():
     #req = requests.post("http://localhost:8000/login", json={'username': 'newUser', 'password': 'dfjsdfsdf'})
     where = input("login, registration, create_room\n")
 
+    #privet dfgdfgfffdfgdfg
+    #privet11 dfgdfgfffdfgdfg
+
     if where == "login":
-        json = {"username": "privet", 'password': "dfgdfgfffdfgdfg"}
+        json = {"username": "privet11", 'password': "dfgdfgfffdfgdfg"}
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json)
     elif where == "registration":
         json = {"username": "privet11", 'password': "dfgdfgfffdfgdfg"}
