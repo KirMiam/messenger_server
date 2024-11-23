@@ -9,6 +9,11 @@ from chat.models import Rooms
 
 class ChatConsumer(AsyncWebsocketConsumer):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.room_group_name = None
+        self.room_name = None
+
     @database_sync_to_async
     def get_user(self, token_key):
         try:
