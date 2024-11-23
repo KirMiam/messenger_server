@@ -28,7 +28,7 @@ async def send(websocket, data):
 async def receive(websocket):
     if websocket:
         await websocket.recv()
-
+        print()
 
 async def connect_to_server():
     print("1 or 2")
