@@ -9,11 +9,6 @@ from chat.models import Rooms
 
 class ChatConsumer(AsyncWebsocketConsumer):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
-        self.room_name = None
-        self.room_group_name = None
-
     @database_sync_to_async
     def get_user(self, token_key):
         try:
@@ -37,12 +32,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         if self.scope["url_route"]["kwargs"]["room_name"] in j["name"]:
                             self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
                             self.room_group_name = f"chat_{self.room_name}"
-                            print(self.channel_name)
-                            print(self.room_group_name)
                             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
                             await self.accept()
         except:
-            await self.close(code=3444)
+            await self.close(code=403)
 
     #
 
