@@ -38,7 +38,7 @@ async def connect_to_server():
         token = "3025c21685462614d97d8ea01d4f20447ffad083"
     else:
         token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
-    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/1/",
+    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/chat1/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         #async with websockets.connect("ws://localhost:8000/ws/chat/chat1/",
         #                              extra_headers={"Authorization": ("Token " + token)}) as websocket:

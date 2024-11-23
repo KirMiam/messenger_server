@@ -34,7 +34,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.scope["user"] = await self.get_user(list(i)[1].decode().split(" ")[1])
                 if self.scope["user"] is not None:
                     for j in await self.get_rooms():
-                        if self.scope["url_route"]["kwargs"]["room_name"] in j["id"]:
+                        if self.scope["url_route"]["kwargs"]["room_name"] in j["name"]:
                             self.room_name = j["id"]
                             print("id" + str(self.room_name))
                             self.room_group_name = f"chat_{self.room_name}"
