@@ -85,7 +85,7 @@ def http_post():
         json = {"name": "chat2"}
         headers = {"Authorization": ("Token " + token)}
         #req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
-        req = requests.post(("http://localhost:8000/" + where), json=json, headers=headers)
+        req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
     try:
         print(req.json())
     except:
