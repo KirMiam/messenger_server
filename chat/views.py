@@ -54,4 +54,8 @@ class CreateRoom(APIView):
     check_auth = (IsAuthenticated,)
 
     def post(self, request):
-        return JsonResponse({"room": create_room_for_name(json.loads(request.body)["name"])}, status=200)
+        room = create_room_for_name(json.loads(request.body)["name"])
+        if room is not None:
+            return JsonResponse({"room": room}, status=200)
+        else:
+            return JsonResponse({"error": "room_error_already_have_room_with_this_name"}, status=200)
