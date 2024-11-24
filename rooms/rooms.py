@@ -4,7 +4,7 @@ from chat.models import Rooms
 def create_room_for_name(name):
     room = Rooms()
     try:
-        if name not in list(Rooms.objects.filter(name=name).values())[0]["name"]:
+        if len(Rooms.objects.filter(name=name).values()) == 0:
             room.name = name
             room.save()
             return list(Rooms.objects.filter(name=name).values())[0]
