@@ -19,4 +19,4 @@ class Message(Rooms):
     date = 0.0
 
     def get(self):
-        return {self.username, self.message, self.date}
+        return {"username": self.username, "message": self.message, "date": self.date}

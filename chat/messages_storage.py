@@ -20,8 +20,7 @@ def save_in_messages_storage(id_room, user, message):
 def getout_from_messages_storage(id_room):
     room = Rooms.objects.get(id=id_room)
     try:
-        print(room.group)
-        return room.group["username"], room.group["message"], room.group["date"]
+        return room.group
     except:
         return None
 
