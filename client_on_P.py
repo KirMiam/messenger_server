@@ -28,12 +28,17 @@ async def connect_to_server():
     async with websockets.connect("ws://176.124.204.174:8000/ws/chat/4/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         f = True
+        await receive(websocket)
         while f:
             try:
                 if a == "1":
                     await send(websocket, {"message": input()})
                     await receive(websocket)
-                    await receive(websocket)
+                    #await receive(websocket)
+
+                    # await send(websocket, {"message": input()})
+                    # await receive(websocket)
+                    # await receive(websocket)
                 else:
                     await receive(websocket)
                     await send(websocket, {"message": input()})
