@@ -40,7 +40,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             print("1")
                             all_messages = await getout_from_messages_storage(self.scope["url_route"]["kwargs"]["room_id"])
                             print(all_messages)
-                            await self.send_db(all_messages)
+                            #await self.send_db(all_messages)
                             print("3")
                             await self.accept()
         except:
@@ -50,6 +50,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, code):
         #await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+        all_messages = await getout_from_messages_storage(self.scope["url_route"]["kwargs"]["room_id"])
+        print(all_messages)
         await self.close()
 
     async def receive(self, text_data=None, bytes_data=None, **kwargs):
