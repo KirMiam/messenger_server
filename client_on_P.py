@@ -19,13 +19,13 @@ async def receive(websocket):
 async def connect_to_server():
     print("1 or 2")
     a = input()
-    if input() == "1":
+    if a == "1":
         print("kirill")
         token = "3025c21685462614d97d8ea01d4f20447ffad083"
     else:
         print("valya")
         token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
-    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/chat1/",
+    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/6/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         f = True
         while f:
@@ -60,14 +60,14 @@ def http_post():
     #privet11 dfgdfgfffdfgdfg
 
     if where == "login":
-        json = {"username": "privet11", 'password': "dfgdfgfffdfgdfg"}
+        json = {"username": "privet", 'password': "dfgdfgfffdfgdfg"}
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json)
     elif where == "registration":
         json = {"username": "privet11", 'password': "dfgdfgfffdfgdfg"}
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json)
     else:
         token = "3025c21685462614d97d8ea01d4f20447ffad083"
-        json = {"name": "chat3"}
+        json = {"name": "chat1"}
         headers = {"Authorization": ("Token " + token)}
         #req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
