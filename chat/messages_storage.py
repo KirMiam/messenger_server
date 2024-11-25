@@ -10,7 +10,7 @@ def save_in_messages_storage(id_room, user, message):
     mess = Message()
     mess.username = user
     mess.message = message
-    mess.time = time.time()
+    mess.date = time.time()
     room = Rooms.objects.get(id=id_room)
     room.group.append(mess.get())
     room.save()
