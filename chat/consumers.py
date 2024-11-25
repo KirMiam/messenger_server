@@ -41,6 +41,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                                 self.scope["url_route"]["kwargs"]["room_id"])
                             #await self.send_db(all_messages)
                             await self.accept()
+                            await self.send_db(all_messages)
         except:
             await self.close(code=403)
 
