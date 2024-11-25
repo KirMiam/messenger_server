@@ -1,3 +1,5 @@
+import time
+
 from channels.db import database_sync_to_async
 from chat.models import Rooms, Message
 import datetime
@@ -8,7 +10,7 @@ def save_in_messages_storage(id_room, user, message):
     mess = Message()
     mess.username = user
     mess.message = message
-    mess.time = str(datetime.datetime.now().time()).split(".")[0] + " " + datetime.date.today().isoformat()
+    mess.time = time.time()
     room = Rooms.objects.get(id=id_room)
     room.group.append(mess.get())
     room.save()
@@ -17,7 +19,7 @@ def save_in_messages_storage(id_room, user, message):
 @database_sync_to_async
 def getout_from_messages_storage(id_room):
     room = Rooms.objects.get(id=id_room)
-    return room.group
+    return room.group["username"], room.group["message"], room.group["date"]
 
     # try:
     #     if len(storage) == 0:

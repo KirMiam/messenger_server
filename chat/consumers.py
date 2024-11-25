@@ -39,9 +39,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
                             all_messages = await getout_from_messages_storage(
                                 self.scope["url_route"]["kwargs"]["room_id"])
-                            #await self.send_db(all_messages)
                             await self.accept()
-                            await self.send_db(all_messages)
+                            await self.send(text_data=json.dumps(all_messages))
         except:
             await self.close(code=403)
 
@@ -70,7 +69,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         username = event["username"]
         await self.send(text_data=json.dumps({"username": username, "message": message}))
 
-    async def send_db(self, all_messages):
-        await self.send(text_data=json.dumps({"messages": all_messages}))
+    # async def send_db(self, all_messages):
+    #     await self.send(text_data=json.dumps({"messages": all_messages}))
 
 

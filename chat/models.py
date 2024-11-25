@@ -14,9 +14,9 @@ class Rooms(models.Model):
 
 
 class Message(Rooms):
-    username = ""
-    message = ""
-    time = ""
+    username: str
+    message: str
+    date: int
 
     def get(self):
-        return [self.username, self.message, self.time]
+        return {self.username, self.message, self.date}
