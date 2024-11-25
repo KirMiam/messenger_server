@@ -39,8 +39,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
                             all_messages = await getout_from_messages_storage(
                                 self.scope["url_route"]["kwargs"]["room_id"])
-                            await self.send_db(all_messages)
-                            #await self.accept()
+                            #await self.send_db(all_messages)
+                            await self.accept()
         except:
             await self.close(code=403)
 
