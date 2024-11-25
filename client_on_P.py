@@ -21,11 +21,11 @@ async def connect_to_server():
     a = input()
     if a == "1":
         print("kirill")
-        token = "347d89ff6bf7ccb45ec299882c4d54995016476e"
+        token = "3053532fea4b9f32c77da01f96fbb32398e152bf"
     else:
         print("valya")
         token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
-    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/4/",
+    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/6/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         f = True
         await receive(websocket)
@@ -48,7 +48,7 @@ async def connect_to_server():
 
 
 def http_get():
-    token = "347d89ff6bf7ccb45ec299882c4d54995016476e"
+    token = "3053532fea4b9f32c77da01f96fbb32398e152bf"
     req = requests.get("http://176.124.204.174:8000/get_rooms", headers={"Authorization": ("Token " + token)})
     #req = requests.get("http://localhost:8000/get_rooms", headers={"Authorization": ("Token " + token)})
     try:
@@ -71,7 +71,7 @@ def http_post():
         json = {"username": "privet11", 'password': "dfgdfgfffdfgdfg"}
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json)
     else:
-        token = "347d89ff6bf7ccb45ec299882c4d54995016476e"
+        token = "3053532fea4b9f32c77da01f96fbb32398e152bf"
         json = {"name": "chat1"}
         headers = {"Authorization": ("Token " + token)}
         #req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
