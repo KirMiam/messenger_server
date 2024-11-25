@@ -40,7 +40,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             print("1")
                             all_messages = await getout_from_messages_storage(self.scope["url_route"]["kwargs"]["room_id"])
                             print(all_messages)
-                            #await self.send(text_data=json.dumps({"messages": all_messages}))
+                            await self.send(text_data=json.dumps({"messages": all_messages}))
                             print("3")
                             await self.accept()
         except:
