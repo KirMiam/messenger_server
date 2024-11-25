@@ -15,7 +15,7 @@ class Rooms(models.Model):
 
 class Message(Rooms):
     username: str
-    message: str
+    message = ''
     date: int
 
     def get(self):
