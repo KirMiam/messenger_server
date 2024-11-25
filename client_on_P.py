@@ -28,7 +28,7 @@ async def connect_to_server():
     async with websockets.connect("ws://176.124.204.174:8000/ws/chat/6/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         f = True
-        await receive(websocket)
+        #await receive(websocket)
         while f:
             try:
                 if a == "1":
