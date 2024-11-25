@@ -16,7 +16,7 @@ class Rooms(models.Model):
 class Message(Rooms):
     username: str
     message = ''
-    date: int
+    date = 0.0
 
     def get(self):
         return {self.username, self.message, self.date}
