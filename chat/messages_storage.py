@@ -1,18 +1,32 @@
 from channels.db import database_sync_to_async
-from chat.models import MessagesStorage
+from chat.models import Rooms, Message
+import datetime
 
 
 @database_sync_to_async
-def save_in_messages_storage(id_room, message):
-    storage = MessagesStorage()
-    try:
-        if len(MessagesStorage.objects.filter(id_room=id_room).values()) == 0:
-            storage.id_room = id_room
-            storage.save()
-            print(MessagesStorage.objects.all())
-        else:
-            print("error2")
-            return None
-    except:
-        print("error1")
-        return None
+def save_in_messages_storage(id_room, user, message):
+    mess = Message()
+    mess.username = user
+    mess.message = message
+    mess.time = str(datetime.datetime.now().time()).split(".")[0] + " " + datetime.date.today().isoformat()
+    room = Rooms.objects.get(id=id_room)
+    room.group.append(mess.get())
+    room.save()
+
+
+@database_sync_to_async
+def getout_from_messages_storage(id_room):
+    room = Rooms.objects.get(id=id_room)
+    return room.group
+
+    # try:
+    #     if len(storage) == 0:
+    #         storage.name = id_room
+    #         storage.save()
+    #         Membership.objects.create(person = user,group = storage)
+    #     else:
+    #         print("error2")
+    #         return None
+    # except:
+    #     print("error1")
+    #     return None

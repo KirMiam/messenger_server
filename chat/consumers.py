@@ -3,7 +3,7 @@ from channels.db import database_sync_to_async
 import json
 from rest_framework.authtoken.models import Token
 from chat.models import Rooms
-from chat.messages_storage import save_in_messages_storage
+from chat.messages_storage import save_in_messages_storage, getout_from_messages_storage
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -37,6 +37,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             self.room_name = self.scope["url_route"]["kwargs"]["room_id"]
                             self.room_group_name = f"id_{self.room_name}"
                             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+                            all_messages = await getout_from_messages_storage(self.scope["url_route"]["kwargs"]["room_id"])
+                            await self.send(text_data=json.dumps({"messages": all_messages}))
                             await self.accept()
         except:
             await self.close(code=403)
@@ -50,8 +52,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None, **kwargs):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        await save_in_messages_storage(self.scope["url_route"]["kwargs"]["room_id"], message)
         username = self.scope["user"].username
+        await save_in_messages_storage(self.scope["url_route"]["kwargs"]["room_id"], username, message)
         await self.channel_layer.group_send(
             self.room_group_name,
             {
