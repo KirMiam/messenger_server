@@ -19,6 +19,7 @@ def save_in_messages_storage(id_room, user, message):
 @database_sync_to_async
 def getout_from_messages_storage(id_room):
     room = Rooms.objects.get(id=id_room)
+    print(room.group)
     return room.group["username"], room.group["message"], room.group["date"]
 
     # try:
