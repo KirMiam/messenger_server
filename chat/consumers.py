@@ -39,7 +39,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
                             print("1")
                             all_messages = await getout_from_messages_storage(self.scope["url_route"]["kwargs"]["room_id"])
-                            print("all_messages")
+                            print(all_messages)
                             #await self.send(text_data=json.dumps({"messages": all_messages}))
                             print("3")
                             await self.accept()
