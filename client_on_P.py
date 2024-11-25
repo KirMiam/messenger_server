@@ -1,25 +1,10 @@
 import json
-
 from websocket import create_connection
 import requests
 import asyncio
 import websockets
-import sys
 
 
-# def ws():
-#     token = "3025c21685462614d97d8ea01d4f20447ffad083"
-#     ws = create_connection("ws://localhost:8000/ws/23",  header={"Authorization": ("Token " + token)})
-#     #ws = create_connection("ws://localhost:8000/ws/23")
-#     #ws = create_connection("ws://localhost:8000/ws/1")
-#     while True:
-#         msg = input('Enter a message: ')
-#         if msg == 'quit':
-#             ws.close()
-#             break
-#         ws.send(msg)
-#         result =  ws.recv()
-#         print ('> ', result)
 async def send(websocket, data):
     if websocket:
         await websocket.send(json.dumps(data))
@@ -27,34 +12,34 @@ async def send(websocket, data):
 
 async def receive(websocket):
     if websocket:
-        while True:
-            recv = await websocket.recv()
-            print(recv)
+        recv = await websocket.recv()
+        print(recv)
 
 
 async def connect_to_server():
     print("1 or 2")
+    a = input()
     if input() == "1":
+        print("kirill")
         token = "3025c21685462614d97d8ea01d4f20447ffad083"
     else:
+        print("valya")
         token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
     async with websockets.connect("ws://176.124.204.174:8000/ws/chat/chat1/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
-        #async with websockets.connect("ws://localhost:8000/ws/chat/chat1/",
-        #                              extra_headers={"Authorization": ("Token " + token)}) as websocket:
-
         f = True
         while f:
-            message = input()
-            if message == "exit":
-                await websocket.close()
-                f = False
-            word = {"message": message}
             try:
-                await send(websocket, word)
-                await receive(websocket)
+                if a == "1":
+                    await send(websocket, {"message": input()})
+                    await receive(websocket)
+                    await receive(websocket)
+                else:
+                    await receive(websocket)
+                    await send(websocket, {"message": input()})
+                    await receive(websocket)
             except websockets.ConnectionClosed:
-                print("i try")
+                await websocket.close()
 
 
 def http_get():
@@ -82,7 +67,7 @@ def http_post():
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json)
     else:
         token = "3025c21685462614d97d8ea01d4f20447ffad083"
-        json = {"name": "chat2"}
+        json = {"name": "chat3"}
         headers = {"Authorization": ("Token " + token)}
         #req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)

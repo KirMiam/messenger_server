@@ -1,10 +1,9 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 import json
-from django.http import JsonResponse
 from rest_framework.authtoken.models import Token
-from asgiref.sync import sync_to_async
 from chat.models import Rooms
+from chat.messages_storage import save_in_messages_storage
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -34,10 +33,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.scope["user"] = await self.get_user(list(i)[1].decode().split(" ")[1])
                 if self.scope["user"] is not None:
                     for j in await self.get_rooms():
-                        if self.scope["url_route"]["kwargs"]["room_name"] in j["name"]:
-                            self.room_name = j["id"]
-                            print("id" + str(self.room_name))
-                            self.room_group_name = f"chat_{self.room_name}"
+                        if self.scope["url_route"]["kwargs"]["room_id"] in str(j["id"]):
+                            self.room_name = self.scope["url_route"]["kwargs"]["room_id"]
+                            self.room_group_name = f"id_{self.room_name}"
                             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
                             await self.accept()
         except:
@@ -46,26 +44,27 @@ class ChatConsumer(AsyncWebsocketConsumer):
     #
 
     async def disconnect(self, code):
-        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+        #await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
         await self.close()
 
     async def receive(self, text_data=None, bytes_data=None, **kwargs):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        # await self.send(text_data=json.dumps({"message": message}))
+        await save_in_messages_storage(self.scope["url_route"]["kwargs"]["room_id"], message)
+        username = self.scope["user"].username
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "chat.message",
+                "username": username,
                 "message": message,
             }
         )
 
     async def chat_message(self, event):
         message = event["message"]
-        # Send message to WebSocket
-        await self.send(text_data=json.dumps({"message": message}))
-        #print("send message")
+        username = event["username"]
+        await self.send(text_data=json.dumps({"username": username, "message": message}))
 
 
 
