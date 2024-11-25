@@ -49,7 +49,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None, **kwargs):
         all_messages = await getout_from_messages_storage(self.scope["url_route"]["kwargs"]["room_id"])
+        print(all_messages)
         await self.send_db(all_messages)
+        print("next")
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         username = self.scope["user"].username
