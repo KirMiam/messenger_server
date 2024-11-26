@@ -1,13 +1,11 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 
 
 def check_user_in_db(body):
-    user = authenticate(username=body["username"], password=body['password'])
-    return user
+    if len(User.objects.filter(username=body)) > 0:
+        return User.objects.get(username=body)
+    else:
+        return None
 
 
 def create_user(body):
@@ -15,3 +13,7 @@ def create_user(body):
                                     body['password'])
     user.save()
     return user
+
+
+def give_users():
+    return {"users": list(User.objects.all().values("username", "last_login"))}

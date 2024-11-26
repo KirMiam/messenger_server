@@ -20,22 +20,23 @@ async def connect_to_server():
     a = input()
     if a == "1":
         print("kirill")
-        token = "1889e406e6db506b4259a0329655e7de336ab2a0"
+        token = "8362a91bbf6a5e1bc14ba4df356529eaa0b5dfab"
     else:
         print("valya")
-        token = 'afdfbe8e066b594f8a74debfee299e5dee01f334'
-    async with websockets.connect("ws://localhost:8000/ws/chat/6/",
+        token = 'f7d2fc0402bb871d628c54d3832fb1a07b9e3398'
+    async with websockets.connect("ws://localhost:8000/ws/chat/13/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         #async with websockets.connect("ws://localhost:8000/ws/chat/chat1/",
         #                              extra_headers={"Authorization": ("Token " + token)}) as websocket:
 
         f = True
+        #await receive(websocket)
         while f:
             try:
                 if a == "1":
                     await send(websocket, {"message": input()})
                     await receive(websocket)
-                    await receive(websocket)
+                    #await receive(websocket)
                 else:
                     await receive(websocket)
                     await send(websocket, {"message": input()})
@@ -45,9 +46,10 @@ async def connect_to_server():
 
 
 def http_get():
-    token = "3025c21685462614d97d8ea01d4f20447ffad083"
-    req = requests.get("http://localhost:8000/get_rooms", headers={"Authorization": ("Token " + token)})
-    #req = requests.get("http://localhost:8000/get_rooms", headers={"Authorization": ("Token " + token)})
+    print("rooms, users")
+    token = "a527ef1c2d680b8b7e0828e4fdd11d661506aff3"
+    where = input()
+    req = requests.get(("http://localhost:8000/get_" + where), headers={"Authorization": ("Token " + token)})
     try:
         print(req.json())
     except:
@@ -56,10 +58,10 @@ def http_get():
 
 def http_post():
     #req = requests.post("http://localhost:8000/login", json={'username': 'newUser', 'password': 'dfjsdfsdf'})
-    where = input("login, registration, create_room\n")
+    where = input("login, registration, create_room, delete_room\n")
 
-    #kirill 1234567890 '1889e406e6db506b4259a0329655e7de336ab2a0'
-    #valya 0987654321qqq 'afdfbe8e066b594f8a74debfee299e5dee01f334'
+    #kirill 1234567890 '8362a91bbf6a5e1bc14ba4df356529eaa0b5dfab'
+    #valya 0987654321qqq 'f7d2fc0402bb871d628c54d3832fb1a07b9e3398'
 
     if where == "login":
         json = {"username": "valya", 'password': "0987654321qqq"}
@@ -67,9 +69,15 @@ def http_post():
     elif where == "registration":
         json = {"username": "valya", 'password': "0987654321qqq"}
         req = requests.post(("http://localhost:8000/" + where), json=json)
+    elif where == "delete_room":
+        token = "8362a91bbf6a5e1bc14ba4df356529eaa0b5dfab"
+        json = {"name": "testroom1"}
+        headers = {"Authorization": ("Token " + token)}
+        # req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
+        req = requests.post(("http://localhost:8000/" + where), json=json, headers=headers)
     else:
-        token = "3025c21685462614d97d8ea01d4f20447ffad083"
-        json = {"name": "chat3"}
+        token = "8362a91bbf6a5e1bc14ba4df356529eaa0b5dfab"
+        json = {"name": ""}
         headers = {"Authorization": ("Token " + token)}
         #req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
         req = requests.post(("http://localhost:8000/" + where), json=json, headers=headers)

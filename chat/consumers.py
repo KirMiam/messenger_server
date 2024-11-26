@@ -1,3 +1,5 @@
+import time
+
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 import json
@@ -42,8 +44,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                                 self.scope["url_route"]["kwargs"]["room_id"])
                             if all_messages is not None:
                                 await self.send(text_data=json.dumps(all_messages))
+                else:
+                    await self.close(code=401, reason="Unauthorized")
         except:
-            await self.close(code=403)
+            await self.close(code=400, reason="BadRequest")
 
     #
 
@@ -55,22 +59,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         username = self.scope["user"].username
-        await save_in_messages_storage(self.scope["url_route"]["kwargs"]["room_id"], username, message)
+        timing = time.time()
+        await save_in_messages_storage(self.scope["url_route"]["kwargs"]["room_id"], username, message, timing)
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "chat.message",
                 "username": username,
                 "message": message,
+                "timing": timing
             }
         )
 
     async def chat_message(self, event):
         message = event["message"]
         username = event["username"]
-        await self.send(text_data=json.dumps({"username": username, "message": message}))
+        timing = event["timing"]
+        await self.send(text_data=json.dumps({"messages": [{"username": username, "message": message, "date": timing}]}))
 
-    # async def send_db(self, all_messages):
-    #     await self.send(text_data=json.dumps({"messages": all_messages}))
 
 

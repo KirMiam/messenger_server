@@ -6,12 +6,14 @@ import datetime
 
 
 @database_sync_to_async
-def save_in_messages_storage(id_room, user, message):
+def save_in_messages_storage(id_room, user, message, timing):
     mess = Message()
     mess.username = user
     mess.message = message
-    mess.date = time.time()
+    mess.date = timing
     room = Rooms.objects.get(id=id_room)
+    if len(room.group) > 50:
+        room.group.pop(0)
     room.group.append(mess.get())
     room.save()
 
