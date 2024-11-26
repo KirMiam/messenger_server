@@ -21,9 +21,7 @@ def save_in_messages_storage(id_room, user, message, timing):
 @database_sync_to_async
 def getout_from_messages_storage(id_room):
     room = Rooms.objects.get(id=id_room)
-    print("1")
     if len(room.group) > 0:
-        print(room.group)
         return room.group
     else:
         return None

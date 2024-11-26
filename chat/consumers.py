@@ -42,7 +42,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             await self.accept()
                             all_messages = await getout_from_messages_storage(
                                 self.scope["url_route"]["kwargs"]["room_id"])
-                            print(all_messages)
                             if all_messages is not None:
                                 await self.send(text_data=json.dumps(all_messages))
                 else:
