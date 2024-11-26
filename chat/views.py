@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from chat.functions import check_user_in_db, create_user, give_users
 from django.contrib.auth.models import User
+from authenticated import IsAuthenticatedWithAddLastLogging
 
 
 # def test_func(request):
@@ -56,7 +57,7 @@ def registration(request):
 
 
 class GetRooms(APIView):
-    check_auth = IsAuthenticated()
+    check_auth = IsAuthenticatedWithAddLastLogging()
 
     def get(self, request):
         return JsonResponse(give_rooms(), status=200)
@@ -67,7 +68,6 @@ class GetUsers(APIView):
 
     def get(self, request):
         return JsonResponse(give_users(), status=200)
-
 
 
 class CreateRoom(APIView):
