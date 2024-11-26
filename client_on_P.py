@@ -21,11 +21,11 @@ async def connect_to_server():
     a = input()
     if a == "1":
         print("kirill")
-        token = "3053532fea4b9f32c77da01f96fbb32398e152bf"
+        token = "783f985d0d85eeca545dad3d4ec0a3987b8448ce"
     else:
         print("valya")
         token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
-    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/6/",
+    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/7/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         f = True
         await receive(websocket)
@@ -48,18 +48,20 @@ async def connect_to_server():
 
 
 def http_get():
-    token = "3053532fea4b9f32c77da01f96fbb32398e152bf"
-    req = requests.get("http://176.124.204.174:8000/get_rooms", headers={"Authorization": ("Token " + token)})
-    #req = requests.get("http://localhost:8000/get_rooms", headers={"Authorization": ("Token " + token)})
+    print("rooms, users")
+    token = "783f985d0d85eeca545dad3d4ec0a3987b8448ce"
+    where = input()
+    req = requests.get(("http://176.124.204.174:8000/get_" + where), headers={"Authorization": ("Token " + token)})
     try:
         print(req.json())
     except:
         print(req)
 
 
+
 def http_post():
     #req = requests.post("http://localhost:8000/login", json={'username': 'newUser', 'password': 'dfjsdfsdf'})
-    where = input("login, registration, create_room\n")
+    where = input("login, registration, create_room, delete_room\n")
 
     #privet dfgdfgfffdfgdfg
     #privet11 dfgdfgfffdfgdfg
@@ -70,8 +72,14 @@ def http_post():
     elif where == "registration":
         json = {"username": "privet11", 'password': "dfgdfgfffdfgdfg"}
         req = requests.post(("http://176.124.204.174:8000/" + where), json=json)
+    elif where == "delete_room":
+        token = "783f985d0d85eeca545dad3d4ec0a3987b8448ce"
+        json = {"name": "chat1"}
+        headers = {"Authorization": ("Token " + token)}
+        # req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
+        req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
     else:
-        token = "3053532fea4b9f32c77da01f96fbb32398e152bf"
+        token = "783f985d0d85eeca545dad3d4ec0a3987b8448ce"
         json = {"name": "chat1"}
         headers = {"Authorization": ("Token " + token)}
         #req = requests.post(("http://176.124.204.174:8000/" + where), json=json, headers=headers)
