@@ -60,6 +60,7 @@ class GetRooms(APIView):
     check_auth = IsAuthenticatedWithAddLastLogging()
 
     def get(self, request):
+        self.check_auth.has_permission(request, self)
         return JsonResponse(give_rooms(), status=200)
 
 
