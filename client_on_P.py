@@ -25,7 +25,7 @@ async def connect_to_server():
     else:
         print("valya")
         token = 'bb96262770aaeab7186f89ad6b22ddce9b3a72c0'
-    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/10/",
+    async with websockets.connect("ws://176.124.204.174:8000/ws/chat/11/",
                                   extra_headers={"Authorization": ("Token " + token)}) as websocket:
         f = True
         await receive(websocket)

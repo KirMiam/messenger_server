@@ -18,7 +18,7 @@ def delete_room_for_name(name):
     try:
         if len(Rooms.objects.filter(name=name).values()) != 0:
             room = Rooms.objects.filter(name=name).values()[0]
-            Rooms.objects.get(name=name).group = []
+            Rooms.objects.get(name=name).group.clear()
             Rooms.objects.get(name=name).delete()
             return room
         else:
