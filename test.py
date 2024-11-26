@@ -3,12 +3,6 @@
 # if len(a) > 0:
 #     print(a[0]["name"])
 
-import datetime
-import time
-
-#print(time.gmtime())
-#print(time.time())
-epoch = time.time()
-epoch_date_time = datetime.datetime.fromtimestamp(epoch)
-print(time.time())
-print(datetime.date.today().isoformat() + " " + str(datetime.datetime.now().time()).split(".")[0])
+import pytz
+from datetime import datetime
+print(datetime.now().replace(tzinfo=pytz.utc))
