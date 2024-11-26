@@ -9,6 +9,5 @@ class IsAuthenticatedWithAddLastLogging(IsAuthenticated):
         if request.user and request.user.is_authenticated:
             user = request.user
             user.last_login = datetime.now().replace(tzinfo=pytz.utc)
-            print(user.last_login)
             user.save(update_fields=['last_login'])
         return request.user and request.user.is_authenticated
