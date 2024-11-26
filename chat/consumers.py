@@ -1,5 +1,5 @@
 import time
-
+from authenticated import IsAuthenticatedWithAddLastLogging
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 import json
@@ -9,6 +9,7 @@ from chat.messages_storage import save_in_messages_storage, getout_from_messages
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    #check_auth = IsAuthenticatedWithAddLastLogging()
 
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)

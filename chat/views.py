@@ -65,16 +65,18 @@ class GetRooms(APIView):
 
 
 class GetUsers(APIView):
-    check_auth = (IsAuthenticated,)
+    check_auth = IsAuthenticatedWithAddLastLogging()
 
     def get(self, request):
+        self.check_auth.has_permission(request, self)
         return JsonResponse(give_users(), status=200)
 
 
 class CreateRoom(APIView):
-    check_auth = (IsAuthenticated,)
+    check_auth = IsAuthenticatedWithAddLastLogging()
 
     def post(self, request):
+        self.check_auth.has_permission(request, self)
         try:
             name_of_room = json.loads(request.body)["name"]
             if len(name_of_room) > 0:
@@ -90,9 +92,10 @@ class CreateRoom(APIView):
 
 
 class DeleteRoom(APIView):
-    check_auth = (IsAuthenticated,)
+    check_auth = IsAuthenticatedWithAddLastLogging()
 
     def post(self, request):
+        self.check_auth.has_permission(request, self)
         try:
             name_of_room = json.loads(request.body)["name"]
             if len(name_of_room) > 0:

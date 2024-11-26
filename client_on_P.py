@@ -49,7 +49,7 @@ async def connect_to_server():
 
 def http_get():
     print("rooms, users")
-    token = "783f985d0d85eeca545dad3d4ec0a3987b8448ce"
+    token = "14e08ecae920a80b982e61125d68787391b2ec53"
     where = input()
     req = requests.get(("http://176.124.204.174:8000/get_" + where), headers={"Authorization": ("Token " + token)})
     try:
