@@ -1,22 +1,17 @@
 from django.db import models
 
 
-# class Rooms():
-#     name = ""
-#     group = []
-#
-#     def add_to_group(self, message_to_add):
-#         self.group.append(message_to_add.get())
-
 class Rooms(models.Model):
     name = models.CharField(max_length=30)
-    group = []
 
 
-class Message(Rooms):
-    username: str
-    message = ''
-    date = 0.0
+class Messages(models.Model):
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
+    username = models.CharField(max_length=30)
+    message = models.CharField(max_length=100)
+    date = models.FloatField(max_length=50)
 
-    def get(self):
-        return {"username": self.username, "message": self.message, "date": self.date}
+
+class RoomUsers(models.Model):
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
+    username = models.CharField(max_length=30)
