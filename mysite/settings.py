@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'channels',
     'rest_framework',
     'chat',
+    'oauth2_provider',
+    'corsheaders',
     'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -63,8 +65,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [

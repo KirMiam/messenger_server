@@ -9,6 +9,6 @@ class GetRoomsAdmin(APIView):
 
     def get(self, request):
         if self.check_auth.has_permission(request, self) is True:
-            return JsonResponse(give_rooms(), status=200)
+            return JsonResponse(give_rooms(request.user.username), status=200)
         else:
             return JsonResponse({"error": "Unauthorized"}, status=401)

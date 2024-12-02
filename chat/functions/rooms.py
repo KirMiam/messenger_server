@@ -55,7 +55,6 @@ def add_user_in_room_group(name, room_id):
 
 def check_user_in_room_group(name, room_id):
     try:
-        print(list(RoomUsers.objects.filter(room_id=room_id).values("username")))
         if {"username": name} in list(RoomUsers.objects.filter(room_id=room_id).values("username")):
             return True
         else:

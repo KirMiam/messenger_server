@@ -93,7 +93,7 @@ def http_post(ip):
 
     if where == "1":
         where = 'login'
-        json = {"username": "valya", 'password': "0987654321qqq&"}
+        json = {{"username": "Ivan", 'password': "0987654321qqq"}}
     else:
         where = "registration"
         json = {"username": "Ivan", 'password': "0987654321qqq"}
