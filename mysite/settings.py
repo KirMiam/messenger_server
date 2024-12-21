@@ -88,7 +88,7 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'mysite.asgi.application'
 
-redis_host = os.environ.get('REDIS_HOST', 'localhost')
+redis_host = os.environ.get('REDIS_HOST', '176.124.204.174')
 
 CHANNEL_LAYERS = {
     "default": {
